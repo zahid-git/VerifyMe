@@ -1,7 +1,15 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+    id ("com.android.application")
+    kotlin ("android")
+    id ("kotlin-parcelize")
+    // id ("org.jetbrains.kotlin.plugin.compose") version "2.0.0" apply false
+    id ("dagger.hilt.android.plugin")
+    id ("com.google.devtools.ksp")
+    id ("com.google.protobuf") version "0.9.4" apply false
+    id ("org.jetbrains.kotlin.kapt")
     alias(libs.plugins.kotlin.compose)
+    // id ("com.google.gms.google-services")
+    // id ("com.google.firebase.crashlytics")
 }
 
 android {
@@ -42,6 +50,7 @@ android {
 dependencies {
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
@@ -56,4 +65,25 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Compose Libs
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.foundation)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    // Dagger Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+
+    // API Client - Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
+
+    // GSON
+    implementation(libs.gson)
+
+
+
 }
