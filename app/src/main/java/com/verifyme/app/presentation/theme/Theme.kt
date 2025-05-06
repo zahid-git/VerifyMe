@@ -1,4 +1,4 @@
-package com.verifyme.app.ui.theme
+package com.verifyme.app.presentation.theme
 
 import android.app.Activity
 import android.os.Build
