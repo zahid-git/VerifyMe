@@ -66,8 +66,7 @@ fun AppNavHost(
         composable<NavRoutes.SplashScreen> (
         ) {
             SplashScreen(
-                navController = navController,
-                modifier = modifier
+                navController = navController
             )
         }
 

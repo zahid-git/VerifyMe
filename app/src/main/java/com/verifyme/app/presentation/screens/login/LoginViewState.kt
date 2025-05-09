@@ -1,4 +1,6 @@
 package com.verifyme.app.presentation.screens.login
 
-class LoginViewState {
-}
+data class LoginViewState(
+    var doLogin : Boolean,
+    var emailAddress: String
+)

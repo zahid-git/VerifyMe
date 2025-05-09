@@ -34,15 +34,14 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen(
     navController: NavHostController,
-    modifier: Modifier = Modifier
 ){
-    ShowSplashPage(navController, modifier)
+    ShowSplashPage(navController, modifier = Modifier)
 
 }
 
 @Preview
 @Composable
-fun ShowSplashPage(
+private fun ShowSplashPage(
     navController: NavHostController = rememberNavController(),
     modifier: Modifier = Modifier
 ){

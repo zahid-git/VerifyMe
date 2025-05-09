@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">VerifyMe</string>
+    <string name="sign_in_to_continue">Sign-In to continue</string>
+    <string name="enter_your_email_address">Enter your email address</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="do_continue">Continue</string>
 </resources>
