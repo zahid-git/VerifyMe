@@ -25,6 +25,7 @@ uiTooling = "1.10.1"
 uiToolingPreview = "1.10.1"
 composeNavigation = "2.9.0"
 serialization = "1.7.3"
+splash ="1.0.1"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
@@ -58,6 +59,8 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
+
+core-splashscreen = { group = "androidx.core", name="core-splashscreen", version.ref="splash"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
