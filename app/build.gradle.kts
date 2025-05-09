@@ -8,6 +8,7 @@ plugins {
     id ("com.google.protobuf") version "0.9.4" apply false
     id ("org.jetbrains.kotlin.kapt")
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
     // id ("com.google.gms.google-services")
     // id ("com.google.firebase.crashlytics")
 }
@@ -83,6 +84,10 @@ dependencies {
 
     // GSON
     implementation(libs.gson)
+
+    // Jetpack Navigation
+    implementation(libs.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
 
 
 
