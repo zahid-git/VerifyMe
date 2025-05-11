@@ -36,6 +36,22 @@ android {
             )
         }
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
+    flavorDimensions.add("environment")
+    productFlavors {
+        create("dev") {
+            dimension = "environment"
+            buildConfigField("String", "API_BASE_URL", "\"https://sandbox-api.pickmyid.com/\"")
+        }
+        create("production") {
+            dimension = "environment"
+            buildConfigField("String", "API_BASE_URL", "\"https://sandbox-api.pickmyid.com/\"")
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11

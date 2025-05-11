@@ -1,0 +1,8 @@
+package com.verifyme.app.data.datasource.remote.network
+
+abstract class NetworkCallback {
+
+
+
+
+}

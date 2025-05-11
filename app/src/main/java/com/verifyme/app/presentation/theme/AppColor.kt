@@ -13,8 +13,8 @@ object AppLightColor {
 }
 
 object AppDarkColor {
-    val primaryColor = Color(0xFF000000)
-    val onPrimaryColor = Color(0xFFFFFFFF)
+    val primaryColor = Color(0xFF4B4B4B)
+    val onPrimaryColor = Color(0xFF2C2C2C)
     val secondaryColor = Color(0xFFFFFFFF)
     val onSecondaryColor = Color(0xFFFFFFFF)
     val accentColor = Color(0xFF072C9A)
