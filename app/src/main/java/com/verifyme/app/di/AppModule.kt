@@ -3,9 +3,12 @@ package com.verifyme.app.di
 import android.content.Context
 import com.google.gson.Gson
 import com.verifyme.app.BuildConfig
+import com.verifyme.app.data.datasource.local.PreferencesManager
+import com.verifyme.app.data.datasource.local.store.LocalDataStoreSourceImpl
 import com.verifyme.app.domain.datasource.RemoteDataSource
 import com.verifyme.app.data.datasource.remote.RemoteDataSourceImpl
 import com.verifyme.app.data.datasource.remote.network.ApiService
+import com.verifyme.app.domain.datasource.LocalDataStoreSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -68,4 +71,24 @@ object AppModule {
     @Singleton
     fun provideRemoteDataSource(apiService: ApiService) : RemoteDataSource = RemoteDataSourceImpl(apiService)
 
+    @Provides
+    @Singleton
+    fun providePreferenceManager(context: Context) : PreferencesManager = PreferencesManager(context)
+
+    @Provides
+    @Singleton
+    fun provideLocalDataStoreSource(preferencesManager: PreferencesManager) : LocalDataStoreSource = LocalDataStoreSourceImpl(preferencesManager)
+
 }
+
+
+
+
+
+
+
+
+
+
+
+

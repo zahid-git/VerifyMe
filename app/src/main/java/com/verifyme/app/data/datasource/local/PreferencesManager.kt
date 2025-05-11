@@ -12,7 +12,13 @@ import kotlinx.coroutines.flow.map
 
 class PreferencesManager @Inject constructor(private val context: Context) {
 
-    private val Context.dataStore by preferencesDataStore(name = "app_prefs")
+    companion object {
+        private val Context.dataStore by preferencesDataStore(name = "auth_prefs")
+
+        // Keys
+        const val TOKEN_KEY: String = "auth_token"
+
+    }
 
     suspend fun saveString(key: String, value: String) {
         val dataKey = stringPreferencesKey(key)

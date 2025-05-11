@@ -7,7 +7,9 @@ import com.verifyme.app.domain.repository.AuthRepository
 import com.verifyme.app.presentation.base.VerifyMeBaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,6 +23,9 @@ class LoginViewModel @Inject constructor(
 
     private val _loginViewState = MutableStateFlow(LoginViewState())
     val loginViewState = _loginViewState.asStateFlow()
+
+    private val _loginUiEvent = MutableSharedFlow<LoginViewEvent>()
+    val loginUiEvent = _loginUiEvent.asSharedFlow()
 
     // Types
     fun onEmailAddressChange(email: String){
@@ -42,11 +47,21 @@ class LoginViewModel @Inject constructor(
 
                 when(result) {
                     is DataResult.onSuccess -> {
-                        // Success
-                        if(result.response?.code == 200) {
-                            updateDialogData(title = "Login Successful", message = "Welcome back! You've successfully logged in.", isSuccess = true, showDialog = true)
-                        } else {
-                            updateDialogData(title = "Login Failed", message = "Your login attempt was unsuccessful. Please check your username and password, then try again.", isSuccess = false, showDialog = true)
+                        when (result.response?.code) {
+                            200 -> {
+                                _loginUiEvent.emit(LoginViewEvent.NavigationToHomePage)
+                            }
+                            else -> {
+                                _loginViewState.value = _loginViewState.value.copy(dialogData = DialogData(
+                                    title= "Login Unsuccessful",
+                                    message= result.response!!.message,
+                                    isSuccess=false,
+                                    showDialog=true,
+                                    enableSuccessBtn = true,
+                                    enableCancelBtn = false,
+                                    successBtnName = "Cancel"
+                                ))
+                            }
                         }
                         _loginViewState.value = _loginViewState.value.copy(isLoginApiLoading = false)
                     }

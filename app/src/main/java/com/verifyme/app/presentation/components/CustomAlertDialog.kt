@@ -35,32 +35,17 @@ fun CustomAlertDialog(
     dialogData: DialogData,
     onConfirm: () -> Unit,
     onCancel: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     if (dialogData.showDialog) {
         Dialog(
-            onDismissRequest = { onCancel() }
+            onDismissRequest = { onDismiss() }
         ) {
             CustomDialog(dialogData, onConfirm, onCancel)
         }
-
-
-        /*(
-            onDismissRequest = onDismiss,
-            title = { Text(dialogData.title) },
-            text = { Text(dialogData.message) },
-            confirmButton = {
-                TextButton(onClick = onConfirm) {
-                    Text("Yes")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = onDismiss) {
-                    Text("Cancel")
-                }
-            }
-        )*/
     }
 }
+
 
 @Composable
 fun CustomDialog(
@@ -109,39 +94,43 @@ fun CustomDialog(
                     modifier = Modifier
                         .padding(start = 20.dp, top = 10.dp, bottom = 20.dp, end = 20.dp)
                 ) {
-                    Button(
-                        modifier = Modifier
-                            .padding(end = 10.dp)
-                            .weight(1f),
-                        onClick = { onCancel() },
-                        shape = RoundedCornerShape(8.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.Transparent,
-                        ),
-                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.onPrimary),
-                    ) {
-                        Text(
-                            text = dialogData.cancelBtnName,
-                            color = Color.Black
-                        )
+                    if(dialogData.enableCancelBtn) {
+                        Button(
+                            modifier = Modifier
+                                .padding(end = 10.dp)
+                                .weight(1f),
+                            onClick = { onCancel() },
+                            shape = RoundedCornerShape(8.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.Transparent,
+                            ),
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.onPrimary),
+                        ) {
+                            Text(
+                                text = dialogData.cancelBtnName,
+                                color = Color.Black
+                            )
+                        }
                     }
-                    Button(
-                        modifier = Modifier
-                            .weight(1f),
-                        onClick = {
-                            onConfirm()
-                        },
-                        shape = RoundedCornerShape(8.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.onPrimary,
-                        ),
-                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.onPrimary)
+                    if(dialogData.enableSuccessBtn) {
+                        Button(
+                            modifier = Modifier
+                                .weight(1f),
+                            onClick = {
+                                onConfirm()
+                            },
+                            shape = RoundedCornerShape(8.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.onPrimary,
+                            ),
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.onPrimary)
 
-                    ) {
-                        Text(
-                            text = dialogData.successBtnName,
-                            color = MaterialTheme.colorScheme.secondary
-                        )
+                        ) {
+                            Text(
+                                text = dialogData.successBtnName,
+                                color = MaterialTheme.colorScheme.secondary
+                            )
+                        }
                     }
                 }
             }

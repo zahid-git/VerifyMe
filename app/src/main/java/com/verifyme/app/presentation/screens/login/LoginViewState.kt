@@ -2,6 +2,7 @@ package com.verifyme.app.presentation.screens.login
 
 data class LoginViewState(
     var isLoginApiLoading: Boolean = false,
+    var isSuccessfulLogin: Boolean = false,
     var dialogData: DialogData = DialogData(),
     var emailAddress: String = "",
     var password: String = "",
@@ -17,4 +18,6 @@ data class DialogData(
     var topIcon: Int? = null,
     var successBtnName: String = "Okay",
     var cancelBtnName: String = "Cancel",
+    var enableSuccessBtn: Boolean = true,
+    var enableCancelBtn: Boolean = true,
 )

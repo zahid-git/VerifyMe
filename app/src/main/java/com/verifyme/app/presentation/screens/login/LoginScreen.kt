@@ -1,5 +1,6 @@
 package com.verifyme.app.presentation.screens.login
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,6 +27,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,9 +45,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.verifyme.app.R
+import com.verifyme.app.navigation.NavRoutes
 import com.verifyme.app.presentation.components.CustomAlertDialog
 import com.verifyme.app.presentation.theme.AppCommonColor
 import com.verifyme.app.presentation.theme.VerifyMeTheme
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.launchIn
 import kotlin.reflect.KVisibility
 
 
@@ -53,21 +59,30 @@ fun LoginPageScreen(
     navController: NavHostController
 ) {
 
-
-    ShowLoginPage(modifier = Modifier)
+    ShowLoginPage(modifier = Modifier, navController = navController)
 
 }
 
-@Preview
 @Composable
 fun ShowLoginPage(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavHostController
 ) {
     var viewModel: LoginViewModel = hiltViewModel()
     val loginViewState by viewModel.loginViewState.collectAsStateWithLifecycle()
+    val loginViewEvent by viewModel.loginUiEvent.collectAsState( initial = null)
+
+    LaunchedEffect(loginViewEvent) {
+        when(loginViewEvent){
+            is LoginViewEvent.NavigationToHomePage -> {
+                navController.navigate(NavRoutes.SplashScreen)
+            }
+            else -> Unit
+        }
+    }
+
 
     VerifyMeTheme {
-
         Column(
             modifier = modifier
                 .background(MaterialTheme.colorScheme.background)
@@ -215,12 +230,10 @@ fun ShowLoginPage(
         CustomAlertDialog(
             dialogData = loginViewState.dialogData,
             onConfirm = {
-                //viewModel.updateDialogData(title = "Login Successful", message = "", showDialog = false)
+                viewModel.updateDialogData(showDialog = false)
             },
-            onCancel = {
-                //viewModel.updateDialogData(title = "Login Failed", message = "Your login attempt was unsuccessful. Please check your username and password, then try again.", showDialog = false)
-
-            }
+            onCancel = { },
+            onDismiss = { viewModel.updateDialogData(showDialog = false)}
         )
     }
 }
