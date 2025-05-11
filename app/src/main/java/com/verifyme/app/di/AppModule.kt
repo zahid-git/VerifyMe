@@ -3,7 +3,7 @@ package com.verifyme.app.di
 import android.content.Context
 import com.google.gson.Gson
 import com.verifyme.app.BuildConfig
-import com.verifyme.app.data.datasource.remote.RemoteDataSource
+import com.verifyme.app.domain.datasource.RemoteDataSource
 import com.verifyme.app.data.datasource.remote.RemoteDataSourceImpl
 import com.verifyme.app.data.datasource.remote.network.ApiService
 import dagger.Module

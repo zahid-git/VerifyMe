@@ -2,6 +2,7 @@
 agp = "8.9.2"
 appcompat = "1.7.0"
 converterGson = "2.11.0"
+datastorePreferences = "1.1.6"
 foundation = "1.8.0"
 gradleVersion = "8.6.0"
 gson = "2.11.0"
@@ -30,6 +31,7 @@ splash ="1.0.1"
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 androidx-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "foundation" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntimeKtx" }

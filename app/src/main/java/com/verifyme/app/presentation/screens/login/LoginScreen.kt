@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -18,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -40,8 +42,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.verifyme.app.R
+import com.verifyme.app.presentation.components.CustomAlertDialog
 import com.verifyme.app.presentation.theme.AppCommonColor
 import com.verifyme.app.presentation.theme.VerifyMeTheme
+import kotlin.reflect.KVisibility
 
 
 @Composable
@@ -59,7 +63,6 @@ fun LoginPageScreen(
 fun ShowLoginPage(
     modifier: Modifier = Modifier
 ) {
-
     var viewModel: LoginViewModel = hiltViewModel()
     val loginViewState by viewModel.loginViewState.collectAsStateWithLifecycle()
 
@@ -132,6 +135,7 @@ fun ShowLoginPage(
                             unfocusedIndicatorColor = Color.Transparent,
                             disabledIndicatorColor = Color.Transparent
                         ),
+                        enabled = !loginViewState.isLoginApiLoading,
                         onValueChange = {
                             viewModel.onEmailAddressChange(it)
                         },
@@ -170,26 +174,53 @@ fun ShowLoginPage(
                         onValueChange = {
                             viewModel.onPasswordChange(it)
                         },
+                        enabled = !loginViewState.isLoginApiLoading,
                         visualTransformation = PasswordVisualTransformation()
                     )
                     Button(
                         modifier = modifier
                             .padding(top = 40.dp, start = 20.dp, end = 20.dp)
+                            .height(50.dp)
                             .fillMaxWidth(),
                         onClick = {
                             viewModel.doLogin()
                         },
-                        contentPadding = PaddingValues(15.dp),
                         shape = RoundedCornerShape(10.dp),
+                        enabled = !loginViewState.isLoginApiLoading
                     ) {
-                        Text(
-                            text = stringResource(R.string.do_continue),
-                            fontSize = 15.sp,
-                            color = MaterialTheme.colorScheme.secondary
-                        )
+                        Row (
+                            modifier = modifier
+                                .wrapContentWidth(),
+                        ) {
+                            if(loginViewState.isLoginApiLoading) {
+                                CircularProgressIndicator(
+                                    modifier = modifier
+                                        .size(40.dp),
+                                    color = Color.White,
+                                    strokeWidth = 3.dp
+                                )
+                            } else {
+                                Text(
+                                    text = stringResource(R.string.do_continue),
+                                    fontSize = 15.sp,
+                                    color = MaterialTheme.colorScheme.secondary
+                                )
+                            }
+                        }
                     }
                 }
             }
         }
+
+        CustomAlertDialog(
+            dialogData = loginViewState.dialogData,
+            onConfirm = {
+                //viewModel.updateDialogData(title = "Login Successful", message = "", showDialog = false)
+            },
+            onCancel = {
+                //viewModel.updateDialogData(title = "Login Failed", message = "Your login attempt was unsuccessful. Please check your username and password, then try again.", showDialog = false)
+
+            }
+        )
     }
 }
