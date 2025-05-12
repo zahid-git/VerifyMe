@@ -27,6 +27,7 @@ uiToolingPreview = "1.10.1"
 composeNavigation = "2.9.0"
 serialization = "1.7.3"
 splash ="1.0.1"
+#vico = "2.1.2"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
@@ -63,6 +64,10 @@ navigation-compose = { module = "androidx.navigation:navigation-compose", versio
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
 
 core-splashscreen = { group = "androidx.core", name="core-splashscreen", version.ref="splash"}
+
+# vico-compose-m3 = { group = "com.patrykandpatrick.vico", name = "compose-m3", version.ref = "vico" }
+# vico-views = { group = "com.patrykandpatrick.vico", name = "views", version.ref = "vico" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

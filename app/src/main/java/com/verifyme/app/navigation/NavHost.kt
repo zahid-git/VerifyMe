@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.verifyme.app.presentation.screens.homepage.HomepageScreen
 import com.verifyme.app.presentation.screens.login.LoginPageScreen
 import com.verifyme.app.presentation.screens.splashscreen.SplashScreen
 import com.verifyme.app.utils.Constants
@@ -62,18 +63,8 @@ fun AppNavHost(
             )
         }
     ) {
-
-        composable<NavRoutes.SplashScreen> (
-        ) {
-            SplashScreen(
-                navController = navController
-            )
-        }
-
-        composable<NavRoutes.LoginPage> {
-            LoginPageScreen(
-                navController = navController
-            )
-        }
+        composable<NavRoutes.SplashScreen> { SplashScreen(navController = navController) }
+        composable<NavRoutes.LoginPage> { LoginPageScreen(navController = navController) }
+        composable<NavRoutes.HomePage> { HomepageScreen(navController = navController) }
     }
 }

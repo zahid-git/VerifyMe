@@ -111,6 +111,8 @@ dependencies {
     // Data Store
     implementation(libs.androidx.datastore.preferences)
 
-
+    // Chart
+    //implementation(libs.vico.compose.m3)
+    //implementation(libs.vico.views)
 
 }

@@ -8,6 +8,7 @@ import com.verifyme.app.data.datasource.local.store.LocalDataStoreSourceImpl
 import com.verifyme.app.domain.datasource.RemoteDataSource
 import com.verifyme.app.data.datasource.remote.RemoteDataSourceImpl
 import com.verifyme.app.data.datasource.remote.network.ApiService
+import com.verifyme.app.data.datasource.remote.network.TokenInterceptor
 import com.verifyme.app.domain.datasource.LocalDataStoreSource
 import dagger.Module
 import dagger.Provides
@@ -41,15 +42,15 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providePublicOkHttpClient(context: Context): OkHttpClient {
+    fun providePublicOkHttpClient(context: Context, localDataStore: LocalDataStoreSource): OkHttpClient {
         val okHttpBuilder = OkHttpClient.Builder()
+        okHttpBuilder.addInterceptor(TokenInterceptor(localDataStore))
         okHttpBuilder.apply {
             if (BuildConfig.DEBUG) {
                 addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             }
             retryOnConnectionFailure(false)
         }
-
         return okHttpBuilder.build()
     }
 

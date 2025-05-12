@@ -5,11 +5,9 @@ import kotlinx.serialization.Serializable
 
 data object NavRoutes {
 
-    @Serializable
-    object SplashScreen
-
-    @Serializable
-    object LoginPage
+    @Serializable object SplashScreen
+    @Serializable object LoginPage
+    @Serializable object HomePage
 
 }
 

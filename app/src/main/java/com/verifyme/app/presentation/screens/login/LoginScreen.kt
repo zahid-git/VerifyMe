@@ -72,10 +72,15 @@ fun ShowLoginPage(
     val loginViewState by viewModel.loginViewState.collectAsStateWithLifecycle()
     val loginViewEvent by viewModel.loginUiEvent.collectAsState( initial = null)
 
+    LaunchedEffect(Unit) {
+        viewModel.onEmailAddressChange("zahidul@newroztech.com")
+        viewModel.onPasswordChange("Password@123")
+    }
+
     LaunchedEffect(loginViewEvent) {
         when(loginViewEvent){
             is LoginViewEvent.NavigationToHomePage -> {
-                navController.navigate(NavRoutes.SplashScreen)
+                navController.navigate(NavRoutes.HomePage)
             }
             else -> Unit
         }
