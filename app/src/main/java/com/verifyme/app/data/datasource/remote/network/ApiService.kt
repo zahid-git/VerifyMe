@@ -22,6 +22,16 @@ interface ApiService {
     @GET("getStoreInformation")
     suspend fun getStoreDetailsInfo( @Query("storeId") storeId: String ): Response<BaseResponseModel<StoreInfoDetailsModel>>
 
+    @GET("getUsersList")
+    suspend fun getUsersList(
+        @Query("storeId") storeId: String,
+        @Query("pageNumber") pageNumber: String,
+        @Query("userId") userId: String?,
+        @Query("id") id: String?,
+        @Query("idType") idType: String?,
+        @Query("country") country: String?,
+        @Query("verified") verified: String?,
+    ): Response<BaseResponseModel<StoreInfoDetailsModel>>
 
 
 

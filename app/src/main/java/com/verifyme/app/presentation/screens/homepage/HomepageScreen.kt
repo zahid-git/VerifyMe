@@ -37,6 +37,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.verifyme.app.R
+import com.verifyme.app.navigation.NavRoutes
 import com.verifyme.app.presentation.theme.AppCommonColor
 import com.verifyme.app.presentation.theme.VerifyMeTheme
 
@@ -44,14 +45,14 @@ import com.verifyme.app.presentation.theme.VerifyMeTheme
 fun HomepageScreen(
     navController: NavHostController
 ) {
-    ShowHomePage(modifier = Modifier.padding(start = 20.dp, end = 20.dp))
+    ShowHomePage(modifier = Modifier.padding(start = 20.dp, end = 20.dp), navController)
 }
 
 
-@Preview
 @Composable
 fun ShowHomePage(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavHostController
 ) {
     var viewModel: HomepageViewModel = hiltViewModel()
 
@@ -198,10 +199,8 @@ fun ShowHomePage(
                 // Summary Section
                 LazyColumn(
                     modifier = Modifier
-                        .padding(top = 20.dp)
                         .wrapContentHeight()
                         .background(Color.Transparent)
-                        .padding(bottom = 20.dp)
                 ) {
                     item {
                         LazyRow(
@@ -229,7 +228,7 @@ fun ShowHomePage(
                                         baseModifier = Modifier.padding(start = 5.dp),
                                         imageId = R.drawable.ic_due_bill,
                                         title = "Pending",
-                                        value = storeDetails.totalPending.toString()
+                                        value = "$ "+storeDetails.totalPending.toString()
                                     )
                                 }
                                 item {
@@ -237,7 +236,7 @@ fun ShowHomePage(
                                         baseModifier = Modifier.padding(start = 5.dp, end = 5.dp),
                                         imageId = R.drawable.ic_dollar,
                                         title = "Paid",
-                                        value = storeDetails.totalPaid.toString()
+                                        value = "$ "+storeDetails.totalPaid.toString()
                                     )
                                 }
                             }
@@ -258,7 +257,7 @@ fun ShowHomePage(
                         .padding(start = 20.dp, end = 20.dp, bottom = 10.dp)
                         .fillMaxWidth(),
                     onClick = {
-
+                        navController.navigate(NavRoutes.SplashScreen)
                     },
                     shape = RoundedCornerShape(10.dp)
                 ) {
@@ -284,7 +283,7 @@ fun HomePageSummaryView(
 ) {
     Card(
         modifier = baseModifier
-            .padding(bottom = 20.dp),
+            .padding(bottom = 20.dp, top = 20.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 10.dp
         ),
