@@ -1,9 +1,12 @@
 package com.verifyme.app.di
 
 import android.content.Context
+import androidx.room.Room
 import com.google.gson.Gson
 import com.verifyme.app.BuildConfig
 import com.verifyme.app.data.datasource.local.PreferencesManager
+import com.verifyme.app.data.datasource.local.database.LocalDatabase
+import com.verifyme.app.data.datasource.local.database.entities.ProfileEntities
 import com.verifyme.app.data.datasource.local.store.LocalDataStoreSourceImpl
 import com.verifyme.app.domain.datasource.RemoteDataSource
 import com.verifyme.app.data.datasource.remote.RemoteDataSourceImpl
@@ -79,6 +82,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideLocalDataStoreSource(preferencesManager: PreferencesManager) : LocalDataStoreSource = LocalDataStoreSourceImpl(preferencesManager)
+
 
 }
 

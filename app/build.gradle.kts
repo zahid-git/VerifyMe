@@ -111,6 +111,10 @@ dependencies {
     // Data Store
     implementation(libs.androidx.datastore.preferences)
 
+    // Data Store
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
     // Chart
     //implementation(libs.vico.compose.m3)
     //implementation(libs.vico.views)

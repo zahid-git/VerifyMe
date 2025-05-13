@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.verifyme.app.presentation.screens.profilepage
 
 import android.util.Log
@@ -9,7 +11,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -34,58 +39,65 @@ fun ProfilePageScreen(
 
     LaunchedEffect(Unit) {
         viewModel.updateStoreId(storeId = storeId)
-        viewModel.getProfileData()
+        //viewModel.getProfileData()
     }
 
-    Column (
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
     ) {
 
-        LazyColumn (
-            modifier = Modifier
-                .fillMaxSize()
+        PullToRefreshBox(
+            state = rememberPullToRefreshState(),
+            isRefreshing = viewState.isLoading,
+            onRefresh = {
+                viewModel.getProfileData()
+            }
         ) {
-            items(viewState.profileList.size) {it ->
-                val item = viewState.profileList[it]
-                if(it >= viewState.profileList.size -1 && !viewState.endReached && !viewState.isLoading) {
-                    Log.e("TAG", "ProfilePageScreen: "+viewState.profileList.size )
-                    viewModel.getProfileData()
-                }
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                items(viewState.profileList.size) { it ->
+                    val item = viewState.profileList[it]
+                    if (it >= viewState.profileList.size - 1 && !viewState.endReached && !viewState.isLoading) {
+                        Log.e("TAG", "ProfilePageScreen: " + viewState.profileList.size)
+                        viewModel.getProfileData()
+                    }
 
-                Column (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(10.dp)
-                        .height(100.dp)
-                        .background(Color.Red)
-                ) {
-                    Text(
+                    Column(
                         modifier = Modifier
-                            .fillMaxWidth(),
-                        text = item.name.toString()
-                    )
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        text = item.id.toString()
-                    )
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        text = item.country.toString()
-                    )
+                            .fillMaxWidth()
+                            .padding(10.dp)
+                            .height(100.dp)
+                            .background(Color.Red)
+                    ) {
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            text = item.name.toString()
+                        )
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            text = item.id.toString()
+                        )
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            text = item.country.toString()
+                        )
+                    }
                 }
             }
-        }
 
-        if(viewState.isLoading) {
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .padding(top = 10.dp, bottom = 10.dp)
-                    .align(Alignment.CenterHorizontally)
-            )
+            /*if (viewState.isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .padding(top = 10.dp, bottom = 10.dp)
+                )
+            }*/
         }
     }
 

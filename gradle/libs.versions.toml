@@ -21,6 +21,7 @@ composeBom = "2024.09.00"
 loggingInterceptor = "4.12.0"
 navigationCompose = "2.8.9"
 retrofit = "2.11.0"
+roomKtx = "2.7.1"
 uiGraphics = "1.10.1"
 uiTooling = "1.10.1"
 uiToolingPreview = "1.10.1"
@@ -37,6 +38,8 @@ androidx-foundation = { module = "androidx.compose.foundation:foundation", versi
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntimeKtx" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomKtx" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
 build-gradle = { module = "com.android.tools.build:gradle", version.ref = "gradleVersion" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
