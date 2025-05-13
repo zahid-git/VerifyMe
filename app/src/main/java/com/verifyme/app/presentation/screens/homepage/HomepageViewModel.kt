@@ -42,13 +42,15 @@ class HomepageViewModel @Inject constructor(
                         is DataResult.onSuccess -> {
                             when (result.response!!.code) {
                                 200 -> {
-                                    var finalResult = result.response.data!!.storeDetails
-                                    _homepageViewState.value = _homepageViewState.value.copy(storeInformation = StoreInformation(
-                                        totalAttempt = if(finalResult.totalUsed == null) 0 else finalResult.totalUsed!! ,
-                                        totalVerified = if(finalResult.totalUsed == null) 0 else finalResult.totalVerified!! ,
-                                        totalPaid = if(finalResult.totalUsed == null) 0.00 else finalResult.totalPaid!! ,
-                                        totalPending = if(finalResult.totalUsed == null) 0.00 else finalResult.totalPending!! ,
-                                    ))
+                                    result.response.data.let {finalResult->
+                                        _homepageViewState.value = _homepageViewState.value.copy(storeInformation = StoreInformation(
+                                            storeId = finalResult?.storeDetails?.id.toString(),
+                                            totalAttempt = finalResult?.storeDetails?.totalUsed!! ,
+                                            totalVerified = finalResult.storeDetails.totalVerified!! ,
+                                            totalPaid = finalResult.storeDetails.totalPaid!! ,
+                                            totalPending = finalResult.storeDetails.totalPending!! ,
+                                        ))
+                                    }
                                 }
                                 else -> {
 

@@ -7,6 +7,7 @@ data class LoginViewState(
 
 
 data class StoreInformation(
+    var storeId : String,
     var totalAttempt : Int = 0,
     var totalVerified : Int = 0,
     var totalPaid : Double = 0.0,

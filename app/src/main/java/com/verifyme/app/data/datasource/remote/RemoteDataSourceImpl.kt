@@ -6,6 +6,7 @@ import com.verifyme.app.data.datasource.remote.network.ApiService
 import com.verifyme.app.data.model.response.BaseResponseModel
 import com.verifyme.app.data.model.response.StoreInfoDetailsModel
 import com.verifyme.app.data.model.response.StoreInfoResponseModel
+import com.verifyme.app.data.model.response.UsersListResponseModel
 import com.verifyme.app.domain.datasource.RemoteDataSource
 import retrofit2.Response
 
@@ -21,6 +22,10 @@ class RemoteDataSourceImpl(private val apiService: ApiService) : RemoteDataSourc
 
     override suspend fun getStoreDetailsInfo(storeId: String): Response<BaseResponseModel<StoreInfoDetailsModel>> {
         return apiService.getStoreDetailsInfo(storeId)
+    }
+
+    override suspend fun getUserList(storeId: String, pageNumber: Int): Response<BaseResponseModel<UsersListResponseModel>> {
+        return apiService.getUsersList(storeId = storeId, pageNumber = pageNumber)
     }
 
 }

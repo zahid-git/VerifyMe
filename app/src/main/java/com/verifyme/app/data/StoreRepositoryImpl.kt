@@ -2,12 +2,11 @@ package com.verifyme.app.data
 
 import android.util.Log
 import com.verifyme.app.data.datasource.DataResult
-import com.verifyme.app.data.datasource.local.PreferencesManager
 import com.verifyme.app.data.datasource.remote.network.NetworkCallback
-import com.verifyme.app.data.model.request.LoginRequestModel
 import com.verifyme.app.data.model.response.BaseResponseModel
 import com.verifyme.app.data.model.response.StoreInfoDetailsModel
 import com.verifyme.app.data.model.response.StoreInfoResponseModel
+import com.verifyme.app.data.model.response.UsersListResponseModel
 import com.verifyme.app.domain.datasource.LocalDataStoreSource
 import com.verifyme.app.domain.datasource.RemoteDataSource
 import com.verifyme.app.domain.repository.StoreRepository
@@ -39,6 +38,18 @@ class StoreRepositoryImpl @Inject constructor(
             } else storeId).toString()
             Log.e("TAG", "getStoreDetails: "+ selectedStoreId)
             val data = safeAPICall { remoteDataSource.getStoreDetailsInfo(selectedStoreId) }
+            emit(data)
+        } catch (e: Exception) {
+            emit(DataResult.onError(BaseResponseModel(message = e.message.toString()), -1))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun getUserList(
+        storeId: String,
+        pageNumber: Int
+    ): Flow<DataResult<BaseResponseModel<UsersListResponseModel>>> = flow{
+        try {
+            val data = safeAPICall { remoteDataSource.getUserList(storeId, pageNumber)}
             emit(data)
         } catch (e: Exception) {
             emit(DataResult.onError(BaseResponseModel(message = e.message.toString()), -1))

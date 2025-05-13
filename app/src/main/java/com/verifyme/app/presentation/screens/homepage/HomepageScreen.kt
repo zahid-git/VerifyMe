@@ -30,7 +30,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -257,7 +256,7 @@ fun ShowHomePage(
                         .padding(start = 20.dp, end = 20.dp, bottom = 10.dp)
                         .fillMaxWidth(),
                     onClick = {
-                        navController.navigate(NavRoutes.SplashScreen)
+                        navController.navigate(NavRoutes.ProfilePage(storeId = homepageViewState.storeInformation?.storeId.toString()))
                     },
                     shape = RoundedCornerShape(10.dp)
                 ) {
