@@ -3,7 +3,6 @@ package com.verifyme.app.data.datasource.local.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.RenameColumn
 
 @Entity(tableName = "profiles")
 data class ProfileEntities(

@@ -47,7 +47,6 @@ fun HomepageScreen(
     ShowHomePage(modifier = Modifier.padding(start = 20.dp, end = 20.dp), navController)
 }
 
-
 @Composable
 fun ShowHomePage(
     modifier: Modifier = Modifier,

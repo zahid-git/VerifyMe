@@ -1,7 +1,6 @@
 package com.verifyme.app.di
 
 import android.content.Context
-import androidx.room.Room
 import com.google.gson.Gson
 import com.verifyme.app.BuildConfig
 import com.verifyme.app.data.datasource.local.PreferencesManager

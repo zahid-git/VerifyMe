@@ -11,7 +11,6 @@ import com.verifyme.app.data.model.response.UsersListDataModel
 import com.verifyme.app.domain.repository.AuthRepository
 import com.verifyme.app.domain.repository.StoreRepository
 import com.verifyme.app.presentation.base.VerifyMeBaseViewModel
-import com.verifyme.app.utils.DefaultPaginator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -38,29 +37,6 @@ class ProfilePageViewModel @Inject constructor(
         if (profileViewState.value.storeId.isNullOrBlank())
             _profileViewState.value = _profileViewState.value.copy(storeId)
     }
-
-    private val paginator = DefaultPaginator(
-        initKey = profileViewState.value.page,
-        onLoadUpdate = {
-            _profileViewState.value = _profileViewState.value.copy(isLoading = true)
-        },
-        onRequest = { nextPage ->
-            getItems()
-        },
-        getNextKey = {
-            profileViewState.value.page + 1
-        },
-        onError = {
-            _profileViewState.value = _profileViewState.value.copy(onError = it?.localizedMessage)
-        },
-        onSuccess = { items, newKey ->
-            _profileViewState.value = _profileViewState.value.copy(
-                profileList = profileViewState.value.profileList + items,
-                page = newKey,
-                endReached = items.isEmpty()
-            )
-        }
-    )
 
     fun getItems(): Result<List<UsersListDataModel>> {
         return Result.success((1..100).map {

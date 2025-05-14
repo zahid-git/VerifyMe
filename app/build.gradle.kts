@@ -1,12 +1,12 @@
 plugins {
-    id ("com.android.application")
-    kotlin ("android")
-    id ("kotlin-parcelize")
+    id("com.android.application")
+    kotlin("android")
+    id("kotlin-parcelize")
     // id ("org.jetbrains.kotlin.plugin.compose") version "2.0.0" apply false
-    id ("dagger.hilt.android.plugin")
-    id ("com.google.devtools.ksp")
-    id ("com.google.protobuf") version "0.9.4" apply false
-    id ("org.jetbrains.kotlin.kapt")
+    id("dagger.hilt.android.plugin")
+    id("com.google.devtools.ksp")
+    id("com.google.protobuf") version "0.9.4" apply false
+    id("org.jetbrains.kotlin.kapt")
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     // id ("com.google.gms.google-services")
@@ -48,7 +48,7 @@ android {
         }
         create("production") {
             dimension = "environment"
-            buildConfigField("String", "API_BASE_URL", "\"https://sandbox-api.pickmyid.com/\"")
+            buildConfigField("String", "API_BASE_URL", "\"https://api.pickmyid.com/\"")
         }
     }
 
@@ -111,9 +111,13 @@ dependencies {
     // Data Store
     implementation(libs.androidx.datastore.preferences)
 
-    // Data Store
+    // Room Database
     implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+
+    // Image Loader
+    implementation(libs.coil.compose)
 
     // Chart
     //implementation(libs.vico.compose.m3)
