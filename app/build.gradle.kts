@@ -9,6 +9,7 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+    id("kotlin-kapt")
     // id ("com.google.gms.google-services")
     // id ("com.google.firebase.crashlytics")
 }
@@ -51,7 +52,9 @@ android {
             buildConfigField("String", "API_BASE_URL", "\"https://api.pickmyid.com/\"")
         }
     }
-
+    kapt {
+        correctErrorTypes = true
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -112,9 +115,9 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
 
     // Room Database
-    implementation(libs.androidx.room.ktx)
+    //implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.runtime)
-    annotationProcessor(libs.androidx.room.compiler)
+    kapt(libs.androidx.room.compiler)
 
     // Image Loader
     implementation(libs.coil.compose)

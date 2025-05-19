@@ -2,21 +2,27 @@ package com.verifyme.app.data.datasource.local.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
+import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Upsert
 import com.verifyme.app.data.datasource.local.database.entities.ProfileEntities
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProfileDao {
 
     @Upsert
-    fun insetData(profile: ProfileEntities)
+    fun insetProfile(profile: ProfileEntities)
+
+    @Upsert
+    fun insetProfiles(profile: List<ProfileEntities>)
 
     @Delete
     fun deleteFunction(profile: ProfileEntities)
 
     @Query("SELECT * FROM profiles")
     fun getUserProfileList(): List<ProfileEntities>
+
+    @Query("DELETE FROM profiles")
+    fun deleteAllProfiles()
 
 }

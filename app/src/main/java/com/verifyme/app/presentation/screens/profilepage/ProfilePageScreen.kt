@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -55,6 +56,8 @@ fun ProfilePageScreen(
     ) {
 
         PullToRefreshBox(
+            modifier = Modifier
+                .weight(1f),
             state = rememberPullToRefreshState(),
             isRefreshing = viewState.isLoading,
             onRefresh = {
@@ -68,16 +71,15 @@ fun ProfilePageScreen(
                 items(viewState.profileList.size) { it ->
                     val item = viewState.profileList[it]
                     if (it >= viewState.profileList.size - 1 && !viewState.endReached && !viewState.isLoading) {
-                        Log.e("TAG", "ProfilePageScreen: " + viewState.profileList.size)
                         viewModel.getProfileData()
                     }
 
-                    Column(
+                    Card (
                         modifier = Modifier
-                            .fillMaxWidth()
                             .padding(10.dp)
+                            .fillMaxWidth()
                             .wrapContentHeight()
-                            .background(Color.Red)
+                            .background(Color.Transparent)
                     ) {
                         Text(
                             modifier = Modifier
@@ -106,13 +108,14 @@ fun ProfilePageScreen(
                     }
                 }
             }
+        }
 
-            /*if (viewState.isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .padding(top = 10.dp, bottom = 10.dp)
-                )
-            }*/
+        if (viewState.isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 10.dp, bottom = 10.dp)
+            )
         }
     }
 
