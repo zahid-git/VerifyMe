@@ -1,17 +1,18 @@
 package com.verifyme.app.di
 
 import android.content.Context
+import androidx.room.Room
 import com.google.gson.Gson
 import com.verifyme.app.BuildConfig
 import com.verifyme.app.data.datasource.local.PreferencesManager
 import com.verifyme.app.data.datasource.local.database.LocalDatabase
-import com.verifyme.app.data.datasource.local.database.entities.ProfileEntities
+import com.verifyme.app.data.datasource.local.database.dao.ProfileDao
 import com.verifyme.app.data.datasource.local.store.LocalDataStoreSourceImpl
-import com.verifyme.app.domain.datasource.RemoteDataSource
 import com.verifyme.app.data.datasource.remote.RemoteDataSourceImpl
 import com.verifyme.app.data.datasource.remote.network.ApiService
 import com.verifyme.app.data.datasource.remote.network.TokenInterceptor
 import com.verifyme.app.domain.datasource.LocalDataStoreSource
+import com.verifyme.app.domain.datasource.RemoteDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,12 +40,16 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideGsonConverterFactory(gson: Gson): GsonConverterFactory = GsonConverterFactory.create(gson)
+    fun provideGsonConverterFactory(gson: Gson): GsonConverterFactory =
+        GsonConverterFactory.create(gson)
 
 
     @Provides
     @Singleton
-    fun providePublicOkHttpClient(context: Context, localDataStore: LocalDataStoreSource): OkHttpClient {
+    fun providePublicOkHttpClient(
+        context: Context,
+        localDataStore: LocalDataStoreSource
+    ): OkHttpClient {
         val okHttpBuilder = OkHttpClient.Builder()
         okHttpBuilder.addInterceptor(TokenInterceptor(localDataStore))
         okHttpBuilder.apply {
@@ -72,15 +77,24 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRemoteDataSource(apiService: ApiService) : RemoteDataSource = RemoteDataSourceImpl(apiService)
+    fun provideRemoteDataSource(apiService: ApiService): RemoteDataSource =
+        RemoteDataSourceImpl(apiService)
 
     @Provides
     @Singleton
-    fun providePreferenceManager(context: Context) : PreferencesManager = PreferencesManager(context)
+    fun providePreferenceManager(context: Context): PreferencesManager = PreferencesManager(context)
 
     @Provides
     @Singleton
-    fun provideLocalDataStoreSource(preferencesManager: PreferencesManager) : LocalDataStoreSource = LocalDataStoreSourceImpl(preferencesManager)
+    fun provideLocalDataStoreSource(preferencesManager: PreferencesManager): LocalDataStoreSource =
+        LocalDataStoreSourceImpl(preferencesManager)
+
+    @Singleton
+    @Provides
+    fun provideLocalDatabase(context: Context): LocalDatabase { return Room.databaseBuilder(context, LocalDatabase::class.java, "verifyme").build() }
+
+    @Provides
+    fun provideProfileDAO(db: LocalDatabase): ProfileDao = db.profileDAO
 
 
 }
