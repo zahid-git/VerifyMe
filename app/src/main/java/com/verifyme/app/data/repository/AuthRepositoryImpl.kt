@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
@@ -36,6 +37,5 @@ class AuthRepositoryImpl @Inject constructor(
             emit(DataResult.onError(BaseResponseModel(message = e.message.toString()), -1))
         }
     }.flowOn(Dispatchers.IO)
-
 
 }
